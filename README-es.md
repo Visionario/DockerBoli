@@ -27,16 +27,17 @@ docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-cor
 1) Cree y vaya a un nuevo directorio *bolidata* donde se alojará la cadena de bloques. Es muy importante que usar la instrucción *mkdir* con su cuenta de usuario (del equipo HOST), evite usar ROOT   
    * > ```mkdir -p /PATH_TO_BOLI_DATA/bolidata```    
 
-2) Abra, y edite a su conveniencia el archivo Generic_Bolivarcoin.conf   
-    * **NOTA**: Debe colocar nuevos valores para rpcuser and rpcpassword 
-    * Or use commands below to automatically set
-    * > ```sed -i "s/rpcuser=CHANGE_THIS/rpcuser=$(openssl rand -hex 16)/g" Generic_Bolivarcoin.conf```  
-    * > ```sed -i "s/rpcpassword=CHANGE_THIS/rpcpassword=$(openssl rand -hex 16)/g" Generic_Bolivarcoin.conf```   
-
-3) Copie Generic_Bolivarcoin.conf en el directorio recién creado con el nombre /PATH_TO_BOLI_DATA/Bolivarcoin.conf  
+2) Copie Generic_Bolivarcoin.conf en el directorio recién creado con el nombre /PATH_TO_BOLI_DATA/Bolivarcoin.conf  
     * > ```cp Generic_Bolivarcoin.conf ./bolidata/Bolivarcoin.conf```   
 <br />   
 <br />   
+
+3) Abra, y edite a su conveniencia el archivo (recién copiado) Bolivarcoin.conf   
+    * **NOTA**: Debe colocar nuevos valores para rpcuser and rpcpassword 
+    * O use estos comandos para hacerlo de manera automática
+    * > ```sed -i "s/rpcuser=CHANGE_THIS/rpcuser=$(openssl rand -hex 16)/g" Bolivarcoin.conf```  
+    * > ```sed -i "s/rpcpassword=CHANGE_THIS/rpcpassword=$(openssl rand -hex 16)/g" Bolivarcoin.conf```   
+
 
 ### **EJECUTAR** contenedor Docker:   
 > ```docker run -dit --rm --name boli -p 3893:3893 -v $(pwd)/bolidata:"/bolidata" bolicoin-core-alpine:v2.0.0.2```   
@@ -63,4 +64,5 @@ L.L.A.P. - Live long and prosper
 
 ### Si te ha servido brinda una cerveza!!   
 ### Te dejo mi billetera Bolicoin/Bolivarcoin:   
-> ```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```
+> ```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```   
+

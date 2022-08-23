@@ -26,14 +26,14 @@ docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-cor
 1) Create and go to a new boli directory. Very important use mkdir with your host user account  
    * > ```mkdir -p /PATH_TO_BOLI_DATA/bolidata```    
 
-2) Open, edit at your convenience Generic_Bolivarcoin.conf
+2) Copy Generic_Bolivarcoin.conf to /PATH_TO_BOLI_DATA/bolidata/Bolivarcoin.conf  
+    * > ```cp Generic_Bolivarcoin.conf ./bolidata/Bolivarcoin.conf```   
+
+3) Open, edit at your convenience Bolivarcoin.conf
     * **NOTE**: You MUST set rpcuser and rpcpassword 
     * Or use commands below to automatically set
-    * > ```sed -i "s/rpcuser=CHANGE_THIS/rpcuser=$(openssl rand -hex 16)/g" Generic_Bolivarcoin.conf```  
-    * > ```sed -i "s/rpcpassword=CHANGE_THIS/rpcpassword=$(openssl rand -hex 16)/g" Generic_Bolivarcoin.conf```   
-
-3) Copy Generic_Bolivarcoin.conf to /PATH_TO_BOLI_DATA/bolidata/Bolivarcoin.conf  
-    * > ```cp Generic_Bolivarcoin.conf ./bolidata/Bolivarcoin.conf```   
+    * > ```sed -i "s/rpcuser=CHANGE_THIS/rpcuser=$(openssl rand -hex 16)/g" Bolivarcoin.conf```  
+    * > ```sed -i "s/rpcpassword=CHANGE_THIS/rpcpassword=$(openssl rand -hex 16)/g" Bolivarcoin.conf```   
 <br />   
 <br />   
 
@@ -63,4 +63,5 @@ L.L.A.P. - Live long and prosper
 
 ### Si te ha servido brinda una cerveza!!   
 ### Te dejo mi billetera Bolicoin/Bolivarcoin:   
-> ```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```
+> ```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```   
+

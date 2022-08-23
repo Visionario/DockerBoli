@@ -2,24 +2,27 @@
 ### For Bolivarcoin Core v2.0.0.2:
 > https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2    
  
-### VERSION 0.9.0
----
+### VERSION 0.9.0   
+---   
+
+[Para español haga clic aquí](./README-es.md)
+
 ## Description  
 ### Dockerfile to construct an docker image for Bolivarcoin/Bolicoin Project    
 <br />   
 <br />   
 
-## **STEPS TO USE (BUILD, PREPARE and RUN)**
+## **STEPS TO USE (BUILD, PREPARE and RUN)**  
 ---
 ### **BUILD** image using defaults:   
 ```
 docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-core-alpine:v2.0.0.2
-```
-> **NOTE**: Why UID and GID is important?, please read https://stackoverflow.com/questions/44683119/dockerfile-replicate-the-host-user-uid-and-gid-to-the-image  
+```   
+> **NOTE**: Why UID and GID is important?, please read https://stackoverflow.com/questions/44683119/dockerfile-replicate-the-host-user-uid-and-gid-to-the-image    
 <br />   
 <br />   
 
-### **PREPARE** for first time run:
+### **PREPARE** for first time run:   
 1) Create and go to a new boli directory. Very important use mkdir with your host user account  
    * > ```mkdir -p /PATH_TO_BOLI_DATA/bolidata```    
 
@@ -40,24 +43,24 @@ docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-cor
 <br />   
 <br />   
 
-### If you need:
+### If you need:   
 * Entering to container (user 'boli')   
-   > docker exec -it boli /bin/sh
+   > docker exec -it boli /bin/sh   
 
  * Executing commands (user 'boli')    
-   > docker exec boli bolivarcoin-cli getinfo  
+   > docker exec boli bolivarcoin-cli getinfo    
 
  * Entering container using root credentials   
-   > docker exec -it -u 0 boli /bin/sh
+   > docker exec -it -u 0 boli /bin/sh  
 
 
 
 
 
-# Author
+# Author   
 Asdrúbal Velásquez Lagrave @Visionario   
 L.L.A.P. - Live long and prosper   
 
-### Si te ha servido brinda una cerveza!! 
-### Te dejo mi billetera Bolicoin/Bolivarcoin: 
-**```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```**
+### Si te ha servido brinda una cerveza!!   
+### Te dejo mi billetera Bolicoin/Bolivarcoin:   
+> ```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```

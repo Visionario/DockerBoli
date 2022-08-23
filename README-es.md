@@ -4,14 +4,17 @@
  
 ### VERSION 0.9.0   
 ---    
+## [For english, click here](./README.md)
+<br />   
+
 ## Descripción  
 
 ### Dockerfile para construir una imagen de Docker y ejecutar su nodo Bolivarcoin/Bolicoin     
 <br />   
 
-[For english, clic here](./README.md)
-<br />   
-
+## Clone este repositorio:
+> git clone https://github.com/Visionario/DockerBoli.git   
+--- 
 
 ## **Pasos: CONSTRUIR, PREPARAR y EJECUTAR**
 ---

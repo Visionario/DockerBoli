@@ -4,22 +4,23 @@
  
 ### VERSION 0.9.0   
 ---   
-
-[Para español haga clic aquí](./README-es.md)
+## [Para español haga clic aquí](./README-es.md)
 
 ## Description  
 ### Dockerfile to construct an docker image for Bolivarcoin/Bolicoin Project    
 <br />   
-<br />   
+
+## Clone this repository:
+> git clone https://github.com/Visionario/DockerBoli.git   
+---
 
 ## **STEPS TO USE (BUILD, PREPARE and RUN)**  
----
+---   
 ### **BUILD** image using defaults:   
 ```
 docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-core-alpine:v2.0.0.2
 ```   
 > **NOTE**: Why UID and GID is important?, please read https://stackoverflow.com/questions/44683119/dockerfile-replicate-the-host-user-uid-and-gid-to-the-image    
-<br />   
 <br />   
 
 ### **PREPARE** for first time run:   
@@ -35,12 +36,10 @@ docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-cor
     * > ```sed -i "s/rpcuser=CHANGE_THIS/rpcuser=$(openssl rand -hex 16)/g" Bolivarcoin.conf```  
     * > ```sed -i "s/rpcpassword=CHANGE_THIS/rpcpassword=$(openssl rand -hex 16)/g" Bolivarcoin.conf```   
 <br />   
-<br />   
 
 ### **RUN** container:   
 > ```docker run -dit --rm --name boli -p 3893:3893 -v $(pwd)/bolidata:"/bolidata" bolicoin-core-alpine:v2.0.0.2```   
----
-<br />   
+---   
 <br />   
 
 ### If you need:   

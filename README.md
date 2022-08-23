@@ -1,5 +1,5 @@
 # Create a Bolivarcoin/Bolicoin Docker image   
-### FOR BOLIVARCOIN CORE v2.0.0.2:
+### For Bolivarcoin Core v2.0.0.2:
 > https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2    
  
 ### VERSION 0.9.0
@@ -33,11 +33,13 @@ docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-cor
     * > ```cp Generic_Bolivarcoin.conf ./bolidata/Bolivarcoin.conf```   
 <br />   
 <br />   
+
 ### **RUN** container:   
 > ```docker run -dit --rm --name boli -p 3893:3893 -v $(pwd)/bolidata:"/bolidata" bolicoin-core-alpine:v2.0.0.2```   
 ---
 <br />   
 <br />   
+
 ### If you need:
 * Entering to container (user 'boli')   
    > docker exec -it boli /bin/sh

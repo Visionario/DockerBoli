@@ -102,10 +102,10 @@ RUN apk --no-cache add zeromq-dev
 
 WORKDIR /tmp
 
-# Download Bolicoin/BolivarCoin official source code and compile
-RUN wget https://github.com/BOLI-Project/BolivarCoin/archive/refs/tags/v2.0.0.2.tar.gz \
-    && tar -xzf v2.0.0.2.tar.gz \
-    && cd /tmp/BolivarCoin-2.0.0.2 \
+# Clone Bolicoin/BolivarCoin official repository and compile
+#RUN wget https://github.com/BOLI-Project/BolivarCoin/archive/refs/tags/v2.0.0.2.tar.gz \
+RUN git clone https://github.com/BOLI-Project/BolivarCoin.git \
+    && cd /tmp/BolivarCoin \
     && echo -e "\n----------> EXECUTING AUTOGEN" \
     && ./autogen.sh \
     && echo -e "\n----------> EXECUTING CONFIGURE" \

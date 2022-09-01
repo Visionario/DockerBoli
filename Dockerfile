@@ -123,7 +123,7 @@ RUN git clone https://github.com/BOLI-Project/BolivarCoin.git \
 
 
 # Prepare binaries bolivarcoind, bolivarcoin-cli and bolivarcoin-tx for the next stage
-RUN cd /tmp/BolivarCoin-2.0.0.2/src \
+RUN cd /tmp/BolivarCoin/src \
     && mkdir /tmp/bolibins/ \
     && strip bolivarcoind && mv bolivarcoind /tmp/bolibins/ \
     && strip bolivarcoin-cli && mv bolivarcoin-cli /tmp/bolibins/ \

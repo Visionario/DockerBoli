@@ -84,7 +84,8 @@ LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario"
 
 COPY --from=berkeleydb /opt /opt
 
-RUN apk --no-cache add autoconf \
+RUN apk --no-cache add \
+    autoconf \
     automake \
     boost-dev \
     build-base \
@@ -99,7 +100,7 @@ RUN apk --no-cache add autoconf \
     linux-headers \
     protobuf-dev \
     zeromq-dev \
-    git \
+    git 
 
 WORKDIR /tmp
 

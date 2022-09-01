@@ -84,22 +84,22 @@ LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario"
 
 COPY --from=berkeleydb /opt /opt
 
-RUN apk --no-cache add autoconf
-RUN apk --no-cache add automake
-RUN apk --no-cache add boost-dev
-RUN apk --no-cache add build-base
-RUN apk --no-cache add chrpath
-RUN apk --no-cache add file
-RUN apk --no-cache add gnupg
-RUN apk --no-cache add libevent-dev
-RUN apk --no-cache add libressl
-RUN apk --no-cache add libressl-dev
-RUN apk --no-cache add libsodium-dev
-RUN apk --no-cache add libtool
-RUN apk --no-cache add linux-headers
-RUN apk --no-cache add protobuf-dev
-RUN apk --no-cache add zeromq-dev
-RUN apk --no-cache add git
+RUN apk --no-cache add autoconf \
+    automake \
+    boost-dev \
+    build-base \
+    chrpath \
+    file \
+    gnupg \
+    libevent-dev \
+    libressl \
+    libressl-dev \
+    libsodium-dev \
+    libtool \
+    linux-headers \
+    protobuf-dev \
+    zeromq-dev \
+    git \
 
 WORKDIR /tmp
 

@@ -2,7 +2,7 @@
 # Create a Bolivarcoin/Bolicoin Docker image
 # FOR BOLIVARCOIN CORE v2.0.0.2 https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2
 # 
-# VERSION 0.9.0
+# VERSION 0.9.1
 # AUTHOR "Asdrúbal Velásquez Lagrave @Visionario" 
 # L.L.A.P. - Live long and prosper
 # 
@@ -99,6 +99,7 @@ RUN apk --no-cache add libtool
 RUN apk --no-cache add linux-headers
 RUN apk --no-cache add protobuf-dev
 RUN apk --no-cache add zeromq-dev
+RUN apk --no-cache add git
 
 WORKDIR /tmp
 
@@ -137,7 +138,7 @@ RUN cd /tmp/BolivarCoin-2.0.0.2/src \
 # ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ╺┻┛╹┗━┛ ╹ ╹┗╸╹┗━┛┗━┛ ╹ ╹┗━┛╹ ╹
 FROM alpine:3.9 as bolicoin
 LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario" 
-LABEL version="0.9.0"
+LABEL version="0.9.1"
 
 # Environments
 ENV PS1='[\u@\h \W]\$ '

@@ -2,7 +2,7 @@
 ### Version del núcleo (core) v2.0.0.2:
 > https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2    
  
-### VERSION 0.9.0   
+### VERSION 0.9.1   
 ---    
 ## [For english, click here](./README.md)
 <br />   

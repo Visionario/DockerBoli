@@ -2,7 +2,7 @@
 ### For Bolivarcoin Core v2.0.0.2:
 > https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2    
  
-### VERSION 0.9.0   
+### VERSION 0.9.1   
 ---   
 ## [Para español haga clic aquí](./README-es.md)
 

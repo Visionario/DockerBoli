@@ -168,7 +168,8 @@ RUN apt-get -y update \
     libboost-all-dev \
     openssl \
     libzmq3-dev \
-    libevent-dev
+    libevent-dev \
+    miniupnpc
 
 
 COPY --from=boli-build /tmp/bolibins/* /usr/bin/

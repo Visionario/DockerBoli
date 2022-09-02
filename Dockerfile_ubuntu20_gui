@@ -54,7 +54,9 @@ RUN apt-get update -y \
     && apt-get -y upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     software-properties-common \
-    build-essential \
+    build-essential
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     autoconf \
     automake \
     wget
@@ -88,11 +90,13 @@ LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario"
 
 COPY --from=berkeleydb /opt /opt
 
-RUN apt-get -y update \
+RUN apt-get update -y \
     && apt-get -y upgrade \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     software-properties-common \
-    build-essential \
+    build-essential
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
     libssl-dev \
     libdb++-dev \
     libboost-all-dev \
@@ -170,9 +174,13 @@ ARG BOLI_HOME="/opt/boli"
 ARG UID=1000
 ARG GID=1000
 
-RUN apt-get -y update \
+RUN apt-get update -y \
     && apt-get -y upgrade \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+    software-properties-common \
+    build-essential
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     libboost-all-dev \
     openssl \
     libzmq3-dev \

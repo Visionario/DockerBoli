@@ -115,7 +115,8 @@ RUN apt-get -y update \
     qt5-qmake \
     qtbase5-dev-tools \
     qttools5-dev-tools \
-    libprotobuf-dev
+    libprotobuf-dev \
+    protobuf-compiler
 
 WORKDIR /tmp
 

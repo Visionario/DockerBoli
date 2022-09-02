@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Create a Bolivarcoin/Bolicoin Docker image
-# FOR BOLIVARCOIN CORE v2.0.0.2 https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2
+# FOR BOLIVARCOIN CORE v2.0.0.2 https://github.com/BOLI-Project/BolivarCoin.git
 # 
 # VERSION 0.9.1
 # AUTHOR "Asdrúbal Velásquez Lagrave @Visionario" 

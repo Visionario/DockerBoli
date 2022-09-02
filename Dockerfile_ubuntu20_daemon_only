@@ -167,7 +167,7 @@ RUN apt-get -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     libboost-all-dev \
     openssl \
-    zeromq3 \
+    libzmq3-dev \
     libevent-dev
 
 

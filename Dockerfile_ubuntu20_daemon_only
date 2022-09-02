@@ -11,7 +11,7 @@
 # STEPS TO USE (BUILD, PREPARE and RUN)
 # 
 # BUILD image using defaults:
-#       docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-core-alpine:v2.0.0.2
+#       docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-core-ubuntu20:v2.0.0.2
 #       NOTE: Why UID and GID is important?, please read https://stackoverflow.com/questions/44683119/dockerfile-replicate-the-host-user-uid-and-gid-to-the-image
 #
 #
@@ -29,7 +29,7 @@
 #
 #
 # RUN container:
-#       docker run -dit --rm --name boli -p 3893:3893 -v $(pwd)/bolidata:"/bolidata" bolicoin-core-alpine:v2.0.0.2
+#       docker run -dit --rm --name boli -p 3893:3893 -v $(pwd)/bolidata:"/bolidata" bolicoin-core-ubuntu20:v2.0.0.2
 #
 #
 # Entering container (user 'boli')
@@ -167,8 +167,8 @@ RUN apt-get -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     libboost-all-dev \
     openssl \
-    libzmq3 \
-    libevent
+    zeromq3 \
+    libevent-dev
 
 
 COPY --from=boli-build /tmp/bolibins/* /usr/bin/

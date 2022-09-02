@@ -51,8 +51,8 @@
 FROM ubuntu:20.04 as berkeleydb
 
 RUN apt-get update -y \
-    && apt-get upgrade \
-    && apt-get -y install \
+    && apt-get -y upgrade \
+    && apt-get -y --no-install-recommends install \
     software-properties-common \
     build-essential \
     autoconf \
@@ -163,7 +163,7 @@ ARG GID=1000
 
 RUN apt-get -y update \
     && apt-get -y upgrade \
-    && apt-get -y install \
+    && apt-get -y --no-install-recommends install \
     libboost-all-dev \
     openssl \
     libzmq3 \

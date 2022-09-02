@@ -1,0 +1,206 @@
+# syntax=docker/dockerfile:1
+# Create a Bolivarcoin/Bolicoin Docker image
+# FOR BOLIVARCOIN CORE v2.0.0.2 https://github.com/BOLI-Project/BolivarCoin.git
+# 
+# VERSION 0.9.1
+# AUTHOR "Asdrúbal Velásquez Lagrave @Visionario" 
+# L.L.A.P. - Live long and prosper
+# 
+# 
+# 
+# STEPS TO USE (BUILD, PREPARE and RUN)
+# 
+# BUILD image using defaults:
+#       docker build . --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t bolicoin-core-ubuntu20:v2.0.0.2
+#       NOTE: Why UID and GID is important?, please read https://stackoverflow.com/questions/44683119/dockerfile-replicate-the-host-user-uid-and-gid-to-the-image
+#
+#
+# PREPARE for first time run: 
+#       1) Create and go to a new boli directory. Very important use mkdir with your host user account
+#          Ex. mkdir -p /PATH_TO_BOLI_DATA/bolidata
+#
+#       2) Open, edit at your convenience Generic_Bolivarcoin.conf
+#          NOTE: You MUST set rpcuser and rpcpassword or use commands below to automatically set
+#          sed -i "s/rpcuser=CHANGE_THIS/rpcuser=$(openssl rand -hex 16)/g" Generic_Bolivarcoin.conf
+#          sed -i "s/rpcpassword=CHANGE_THIS/rpcpassword=$(openssl rand -hex 16)/g" Generic_Bolivarcoin.conf
+#
+#       3) Copy Generic_Bolivarcoin.conf to /PATH_TO_BOLI_DATA/bolidata/Bolivarcoin.conf
+#          cp Generic_Bolivarcoin.conf ./bolidata/Bolivarcoin.conf
+#
+#
+# RUN container:
+#       docker run -dit --rm --name boli -p 3893:3893 -v $(pwd)/bolidata:"/bolidata" bolicoin-core-ubuntu20:v2.0.0.2
+#
+#
+# Entering container (user 'boli')
+#       docker exec -it boli /bin/sh
+#
+# Executing commands (user 'boli')
+#       docker exec boli bolivarcoin-cli getinfo
+#
+# Entering container using root credentials
+#       docker exec -it -u 0 boli /bin/sh
+#
+#
+###############################################################################
+
+# Build stage for BerkeleyDB
+# ┏━┓╺┳╸┏━┓┏━╸┏━╸    ┏┓ ┏━╸┏━┓╻┏ ┏━╸╻  ┏━╸╻ ╻╺┳┓┏┓ 
+# ┗━┓ ┃ ┣━┫┃╺┓┣╸ ╹   ┣┻┓┣╸ ┣┳┛┣┻┓┣╸ ┃  ┣╸ ┗┳┛ ┃┃┣┻┓
+# ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ┗━┛┗━╸╹┗╸╹ ╹┗━╸┗━╸┗━╸ ╹ ╺┻┛┗━┛
+FROM ubuntu:20.04 as berkeleydb
+
+RUN apt-get update -y \
+    && apt-get -y upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+    software-properties-common \
+    build-essential \
+    autoconf \
+    automake \
+    wget
+
+ENV BERKELEYDB_VERSION=db-4.8.30.NC
+ENV BERKELEYDB_PREFIX=/opt/${BERKELEYDB_VERSION}
+
+RUN wget --quiet https://download.oracle.com/berkeley-db/${BERKELEYDB_VERSION}.tar.gz
+RUN tar -xzf *.tar.gz
+RUN sed s/__atomic_compare_exchange/__atomic_compare_exchange_db/g -i ${BERKELEYDB_VERSION}/dbinc/atomic.h
+RUN mkdir -p ${BERKELEYDB_PREFIX}
+
+WORKDIR /${BERKELEYDB_VERSION}/build_unix
+
+RUN ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=${BERKELEYDB_PREFIX}
+RUN make -j4
+RUN make install
+RUN rm -rf ${BERKELEYDB_PREFIX}/docs
+
+
+
+
+
+# Build stage for Bolicoin v2.0.0.2 (Compile)
+# ┏━┓╺┳╸┏━┓┏━╸┏━╸    ┏┓ ╻ ╻╻╻  ╺┳┓
+# ┗━┓ ┃ ┣━┫┃╺┓┣╸ ╹   ┣┻┓┃ ┃┃┃   ┃┃
+# ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ┗━┛┗━┛╹┗━╸╺┻┛
+FROM ubuntu:20.04 as boli-build
+
+LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario" 
+
+COPY --from=berkeleydb /opt /opt
+
+RUN apt-get -y update \
+    && apt-get -y upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    software-properties-common \
+    build-essential \
+    libssl-dev \
+    libdb++-dev \
+    libboost-all-dev \
+    libminiupnpc-dev \
+    automake \
+    autoconf \
+    autotools-dev \
+    libzmq3-dev \
+    git \
+    pkg-config \
+    libcurl4-openssl-dev \
+    libjansson-dev \
+    libgmp-dev \
+    make \
+    g++ \
+    gcc \
+    libevent-dev \
+    libtool \
+    qt5-default \
+    qt5-qmake \
+    qtbase5-dev-tools \
+    qttools5-dev-tools    
+
+WORKDIR /tmp
+
+# Clone Bolicoin/BolivarCoin official repository and compile
+RUN git clone https://github.com/BOLI-Project/BolivarCoin.git \
+    && cd /tmp/BolivarCoin \
+    && echo -e "\n----------> EXECUTING AUTOGEN" \
+    && ./autogen.sh \
+    && echo -e "\n----------> EXECUTING CONFIGURE" \
+    && ./configure LDFLAGS=-L`ls -d /opt/db*`/lib/ CPPFLAGS=-I`ls -d /opt/db*`/include/ \
+    --disable-tests \
+    --disable-bench \
+    --disable-ccache \
+    --with-gui \
+    --with-utils \
+    --with-libs \
+    --with-daemon \
+    && echo -e "\n----------> EXECUTING MAKE" \
+    && make
+
+
+# Prepare binaries bolivarcoind, bolivarcoin-cli and bolivarcoin-tx for the next stage
+RUN cd /tmp/BolivarCoin/src \
+    && mkdir /tmp/bolibins/ \
+    && strip bolivarcoind && mv bolivarcoind /tmp/bolibins/ \
+    && strip bolivarcoin-cli && mv bolivarcoin-cli /tmp/bolibins/ \
+    && strip bolivarcoin-tx && mv bolivarcoin-tx /tmp/bolibins/ \
+    && cd qt \
+    && strip bolivarcoin-qt && mv bolivarcoin-qt /tmp/bolibins/
+
+
+
+#
+# Build stage for Bolicoin v2.0.0.2 distrib
+# ┏━┓╺┳╸┏━┓┏━╸┏━╸    ╺┳┓╻┏━┓╺┳╸┏━┓╻┏┓ ╻ ╻╺┳╸╻┏━┓┏┓╻
+# ┗━┓ ┃ ┣━┫┃╺┓┣╸ ╹    ┃┃┃┗━┓ ┃ ┣┳┛┃┣┻┓┃ ┃ ┃ ┃┃ ┃┃┗┫
+# ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ╺┻┛╹┗━┛ ╹ ╹┗╸╹┗━┛┗━┛ ╹ ╹┗━┛╹ ╹
+FROM ubuntu:20.04 as bolicoin
+LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario" 
+LABEL version="0.9.1"
+
+# Environments
+ENV PS1='[\u@\h \W]\$ '
+ENV BOLI_DATA "/bolidata"
+ENV USERNAME="boli"
+ENV GROUPNAME=$USERNAME
+ENV PORT=3893
+
+# ARGuments
+ARG BOLI_HOME="/opt/boli"
+ARG UID=1000
+ARG GID=1000
+
+RUN apt-get -y update \
+    && apt-get -y upgrade \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+    libboost-all-dev \
+    openssl \
+    libzmq3-dev \
+    libevent-dev \
+    miniupnpc \
+    libqrencode-dev
+
+
+COPY --from=boli-build /tmp/bolibins/* /usr/bin/
+
+# Create system user and group
+RUN addgroup --gid $GID $GROUPNAME \
+    && adduser --uid $UID --disabled-password --ingroup $GROUPNAME --home $BOLI_HOME --gecos "Bolicoin/Bolivarcoin Node" $USERNAME 
+
+COPY daemon_boli_start.sh /opt/boli/daemon_boli_start.sh
+RUN chmod +x /opt/boli/daemon_boli_start.sh
+
+RUN mkdir "$BOLI_DATA" \
+    && chown -R $USERNAME:$GROUPNAME "$BOLI_DATA" \
+    && ln -sfn "$BOLI_DATA" "$BOLI_HOME/.Bolivarcoin" \
+    && chown -h $USERNAME:$GROUPNAME "$BOLI_HOME/.Bolivarcoin"
+
+WORKDIR $BOLI_DATA
+
+VOLUME ["$BOLI_DATA"]
+
+USER $USERNAME
+
+EXPOSE $PORT
+
+# Daemon must starts with "-daemon=0" for detached mode
+CMD ["/opt/boli/daemon_boli_start.sh","-daemon=0"]
+

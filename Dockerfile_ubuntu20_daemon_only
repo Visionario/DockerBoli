@@ -56,7 +56,8 @@ RUN apt-get update -y \
     software-properties-common \
     build-essential \
     autoconf \
-    automake
+    automake \
+    wget
 
 ENV BERKELEYDB_VERSION=db-4.8.30.NC
 ENV BERKELEYDB_PREFIX=/opt/${BERKELEYDB_VERSION}

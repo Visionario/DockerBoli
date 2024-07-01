@@ -2,7 +2,7 @@
 # Create a Bolivarcoin/Bolicoin Docker image
 # FOR BOLIVARCOIN CORE v2.0.0.2 https://github.com/BOLI-Project/BolivarCoin.git
 # 
-# VERSION 0.9.1
+# VERSION 0.9.2
 # AUTHOR "Asdrúbal Velásquez Lagrave @Visionario" 
 # L.L.A.P. - Live long and prosper
 # 
@@ -48,7 +48,7 @@
 # ┏━┓╺┳╸┏━┓┏━╸┏━╸    ┏┓ ┏━╸┏━┓╻┏ ┏━╸╻  ┏━╸╻ ╻╺┳┓┏┓ 
 # ┗━┓ ┃ ┣━┫┃╺┓┣╸ ╹   ┣┻┓┣╸ ┣┳┛┣┻┓┣╸ ┃  ┣╸ ┗┳┛ ┃┃┣┻┓
 # ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ┗━┛┗━╸╹┗╸╹ ╹┗━╸┗━╸┗━╸ ╹ ╺┻┛┗━┛
-FROM alpine:3.9 as berkeleydb
+FROM alpine:3.9 AS berkeleydb
 
 RUN apk --no-cache add autoconf
 RUN apk --no-cache add automake
@@ -66,7 +66,7 @@ RUN mkdir -p ${BERKELEYDB_PREFIX}
 WORKDIR /${BERKELEYDB_VERSION}/build_unix
 
 RUN ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=${BERKELEYDB_PREFIX}
-RUN make -j4
+RUN make -j$(nproc)
 RUN make install
 RUN rm -rf ${BERKELEYDB_PREFIX}/docs
 
@@ -78,7 +78,7 @@ RUN rm -rf ${BERKELEYDB_PREFIX}/docs
 # ┏━┓╺┳╸┏━┓┏━╸┏━╸    ┏┓ ╻ ╻╻╻  ╺┳┓
 # ┗━┓ ┃ ┣━┫┃╺┓┣╸ ╹   ┣┻┓┃ ┃┃┃   ┃┃
 # ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ┗━┛┗━┛╹┗━╸╺┻┛
-FROM alpine:3.9 as boli-build
+FROM alpine:3.9 AS boli-build
 
 LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario" 
 
@@ -137,13 +137,13 @@ RUN cd /tmp/BolivarCoin/src \
 # ┏━┓╺┳╸┏━┓┏━╸┏━╸    ╺┳┓╻┏━┓╺┳╸┏━┓╻┏┓ ╻ ╻╺┳╸╻┏━┓┏┓╻
 # ┗━┓ ┃ ┣━┫┃╺┓┣╸ ╹    ┃┃┃┗━┓ ┃ ┣┳┛┃┣┻┓┃ ┃ ┃ ┃┃ ┃┃┗┫
 # ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ╺┻┛╹┗━┛ ╹ ╹┗╸╹┗━┛┗━┛ ╹ ╹┗━┛╹ ╹
-FROM alpine:3.9 as bolicoin
+FROM alpine:3.9 AS bolicoin
 LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario" 
-LABEL version="0.9.1"
+LABEL version="0.9.2"
 
 # Environments
 ENV PS1='[\u@\h \W]\$ '
-ENV BOLI_DATA "/bolidata"
+ENV BOLI_DATA="/bolidata"
 ENV USERNAME="boli"
 ENV GROUPNAME=$USERNAME
 ENV PORT=3893
@@ -190,4 +190,3 @@ ENTRYPOINT ["/sbin/tini", "--", "/bin/sh"]
 
 # Daemon must starts with "-daemon=0" for detached mode
 CMD ["/opt/boli/daemon_boli_start.sh","-daemon=0"]
-

@@ -2,7 +2,7 @@
 # Create a Bolivarcoin/Bolicoin Docker image
 # FOR BOLIVARCOIN CORE v2.0.0.2 https://github.com/BOLI-Project/BolivarCoin.git
 # 
-# VERSION 0.9.1
+# VERSION 0.9.2
 # AUTHOR "Asdrúbal Velásquez Lagrave @Visionario" 
 # L.L.A.P. - Live long and prosper
 # 
@@ -160,7 +160,7 @@ RUN cd /tmp/BolivarCoin/src \
 # ┗━┛ ╹ ╹ ╹┗━┛┗━╸╹   ╺┻┛╹┗━┛ ╹ ╹┗╸╹┗━┛┗━┛ ╹ ╹┗━┛╹ ╹
 FROM ubuntu:20.04 as bolicoin
 LABEL maintainer="Asdrúbal Velásquez Lagrave @Visionario" 
-LABEL version="0.9.1"
+LABEL version="0.9.2"
 
 # Environments
 ENV PS1='[\u@\h \W]\$ '
@@ -213,4 +213,3 @@ EXPOSE $PORT
 
 # Daemon must starts with "-daemon=0" for detached mode
 CMD ["/opt/boli/daemon_boli_start.sh","-daemon=0"]
-

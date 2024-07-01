@@ -2,7 +2,7 @@
 ### For Bolivarcoin Core v2.0.0.2:
 > https://github.com/BOLI-Project/BolivarCoin/releases/tag/v2.0.0.2    
  
-### VERSION 0.9.1   
+### VERSION 0.9.2   
 ---   
 ## [Para español haga clic aquí](./README-es.md)
 
@@ -63,4 +63,3 @@ L.L.A.P. - Live long and prosper
 ### Si te ha servido brinda una cerveza!!   
 ### Te dejo mi billetera Bolicoin/Bolivarcoin:   
 > ```bPE39yGPMnwP1NcaUFj8mhYCnMX52T1bb```   
-
